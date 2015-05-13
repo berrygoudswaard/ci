@@ -1,0 +1,28 @@
+{
+    "name": "berrygoudswaard/ci",
+    "description": "CI script",
+    "require": {
+        "guzzlehttp/guzzle": "^5.2",
+        "symfony/config": "^2.6",
+        "symfony/console": "~2.6",
+        "symfony/dependency-injection": "^2.6",
+        "symfony/yaml": "~2.6"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Berry Goudswaard",
+            "email": "berry@xseeding.nl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "BerryGoudswaard\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BerryGoudswaard\\Test\\": "tests/"
+        }
+    }
+}

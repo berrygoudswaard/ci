@@ -1,0 +1,13 @@
+parameters:
+    restClient:
+        base_url: http://127.0.0.1:2376
+
+services:
+    restClient:
+        class: \GuzzleHttp\Client
+        arguments: ['%restClient%']
+    dockerService:
+        class: \BerryGoudswaard\CI\Docker\DockerService
+        arguments: ['@restClient']
+    configurationService:
+        class: \BerryGoudswaard\CI\Configuration\ConfigurationService
