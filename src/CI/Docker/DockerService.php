@@ -27,6 +27,14 @@ class DockerService
         return $response->json();
     }
 
+    public function createImage($imageName)
+    {
+        $data = $this->restClient->post(
+            sprintf('/images/create?fromImage=%s', $imageName)
+        );
+
+        return $data->getStatusCode() === 200;
+    }
 
     public function createContainer(Container $container)
     {

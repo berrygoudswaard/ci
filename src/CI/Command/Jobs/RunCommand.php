@@ -47,6 +47,11 @@ class RunCommand extends Command
             $container->addBind($script->getTmpFile(), $script->getTargetFile());
             $container->addCallback([$this, 'logListener'], [$output]);
 
+            $output->writeln('<comment>Updating image</comment>');
+            if (!$dockerService->createImage($container->getImage())) {
+                throw new \Exception('Image could not be updated/pulled');
+            }
+
             $output->writeln('<comment>Creating container</comment>');
             if (!$container = $dockerService->createContainer($container)) {
                 throw new \Exception('Container could not be created');
