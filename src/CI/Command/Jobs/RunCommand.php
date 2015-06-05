@@ -42,6 +42,10 @@ class RunCommand extends Command
 
             $container = new Container();
             $container->setImage($image);
+
+            foreach ($configuration->getVolumes() as $volume) {
+                $container->addBind($volume['source'], $volume['target']);
+            }
             $container->addVolume($script->getTargetFile(), $script->getTmpFile());
             $container->addBind($configuration->getWorkingDir(), '/home/ci/project');
             $container->addBind($script->getTmpFile(), $script->getTargetFile());

@@ -9,6 +9,7 @@ class Config
 {
     protected $language;
     protected $tags = [];
+    protected $volumes = [];
     protected $script;
     protected $workingDir;
 
@@ -21,6 +22,7 @@ class Config
     {
         $config += [
             'databases' => [],
+            'volumes' => [],
             'before_script' => [],
             'script' => [],
             'after_script' => []
@@ -44,8 +46,22 @@ class Config
         }
 
         $this->setWorkingDir($workingDir);
+        $this->setVolumes($config['volumes']);
         $this->setImages($images);
         $this->setScript($script);
+    }
+
+    public function getVolumes()
+    {
+        return $this->volumes;
+    }
+
+    public function setVolumes($volumes)
+    {
+        foreach ($volumes as $volume) {
+            list($source, $target) = explode(':', $volume);
+            $this->volumes[] = compact('source', 'target');
+        }
     }
 
     public function setScript(Script $script)
