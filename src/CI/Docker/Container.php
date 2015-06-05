@@ -5,6 +5,7 @@ namespace BerryGoudswaard\CI\Docker;
 class Container
 {
     private $cmd;
+    private $envs;
     private $id;
     private $image;
     private $volumes = [];
@@ -52,12 +53,19 @@ class Container
         $this->binds[] = sprintf('%s:%s', $srcPath, $destPath);
     }
 
+    public function setEnvs($envs = [])
+    {
+        $this->envs = $envs;
+    }
+
+
     public function getOptions()
     {
         return [
             'Image' => $this->image,
             'Cmd' => $this->cmd,
             'Volumes' => $this->volumes,
+            'Env' => $this->envs,
             'HostConfig' => [
                 'Binds' => $this->binds
             ]

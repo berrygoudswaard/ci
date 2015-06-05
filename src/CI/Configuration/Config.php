@@ -13,12 +13,12 @@ class Config
     protected $script;
     protected $workingDir;
 
-    public function __construct($config)
+    public function __construct($config, $envs = [])
     {
-        $this->processConfig($config);
+        $this->processConfig($config, $envs);
     }
 
-    public function processConfig($config)
+    public function processConfig($config, $envs = [])
     {
         $config += [
             'databases' => [],
@@ -37,6 +37,7 @@ class Config
         }
 
         $script = new Script();
+        $script->setEnvs($envs);
         $script->setDatabaseScripts($config['databases']);
         $script->setBeforeScripts($config['before_script']);
         $script->setScripts($config['script']);

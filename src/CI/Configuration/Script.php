@@ -5,6 +5,7 @@ namespace BerryGoudswaard\CI\Configuration;
 class Script
 {
     private $databaseScripts = [];
+    private $envs = [];
     private $beforeScripts = [];
     private $scripts = [];
     private $afterScripts = [];
@@ -32,6 +33,13 @@ class Script
                     $database['username']
                 );
             }
+        }
+    }
+
+    public function setEnvs(array $envs)
+    {
+        foreach ($envs as $env) {
+            $this->envs[] = sprintf('export %s', $env);
         }
     }
 
@@ -65,6 +73,7 @@ class Script
         if (!isset($this->tmpFile)) {
             $lines = array_merge(
                 ['#!/bin/bash'],
+                [implode(' && ', $this->envs)],
                 [implode(' && ', $this->databaseScripts)],
                 [implode(' && ', $this->beforeScripts)],
                 [implode(' && ', $this->scripts)],

@@ -6,6 +6,7 @@ use BerryGoudswaard\CI\Docker\Container;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class RunCommand extends Command
@@ -19,6 +20,13 @@ class RunCommand extends Command
                 'config',
                 InputArgument::REQUIRED,
                 'Path to the project'
+            )
+            ->addOption(
+               'env',
+               null,
+               InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+               'Additional env values',
+               []
             );
     }
 
@@ -31,7 +39,7 @@ class RunCommand extends Command
         $configurationService = $container->get('configurationService');
         $dockerService = $container->get('dockerService');
 
-        $configuration = $configurationService->createFromYaml($configFile);
+        $configuration = $configurationService->createFromYaml($configFile, $input->getoption('env'));
         $script = $configuration->getScript();
 
         $allSuccess = true;
