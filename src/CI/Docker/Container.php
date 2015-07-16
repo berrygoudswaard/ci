@@ -45,7 +45,7 @@ class Container
 
     public function addVolume($destPath, $srcPath)
     {
-        $this->volumes[$destPath] = $srcPath;
+        $this->volumes[$destPath] = new \stdClass();
     }
 
     public function addBind($srcPath, $destPath)
